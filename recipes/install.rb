@@ -28,6 +28,7 @@ directory 'xdebug.profiler_output_dir' do
   group 'www-data'
   action :create
   only_if { node['xdebug']['directives']['profiler_output_dir'] }
+  ignore_failure true
 end
 
 php_pear name do
