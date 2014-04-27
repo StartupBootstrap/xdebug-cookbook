@@ -7,6 +7,9 @@
 # MIT
 #
 
+name = 'xdebug'
+directives = node['xdebug']['directives']
+
 resource_not_found = {}
 begin
   resources('service[php-fpm]')
@@ -27,10 +30,19 @@ directory 'xdebug.profiler_output_dir' do
   only_if { node['xdebug']['directives']['profiler_output_dir'] }
 end
 
-php_pear 'xdebug' do
+php_pear name do
   zend_extensions ['xdebug.so']
-  directives (node['xdebug']['directives'])
+  directives (directives)
   action :install
   notifies :reload, 'service[php-fpm]' unless resource_not_found['service[php-fpm]']
   notifies :reload, 'service[apache2]' unless resource_not_found['service[apache2]']
+end
+
+template "#{node['php']['ext_conf_dir']}/#{name}.ini" do
+  source 'extension.ini.erb'
+  cookbook 'php'
+  owner 'root'
+  group 'root'
+  mode '0644'
+  variables(:name => name, :extensions =>  {'xdebug.so' => 'zend'}, :directives => directives)
 end
