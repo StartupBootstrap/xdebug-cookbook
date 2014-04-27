@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: xdebug
-# Recipe:: default
+# Recipe:: install
 #
 # Copyright (C) 2014 Startup Bootstrap
 #

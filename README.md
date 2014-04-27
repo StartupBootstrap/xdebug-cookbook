@@ -27,17 +27,15 @@ Example of debugging and profiling options are in [Common configuration options 
 
 ## Usage
 
-### xdebug::default
+### xdebug::install
 
-Include `xdebug` in your node's `run_list`:
+Include `xdebug::install` in your node's `run_list` for install Xdebug extensions:
 
-```json
-{
-  "run_list": [
-    "recipe[xdebug::default]"
-  ]
-}
-```
+
+### xdebug::uninstall
+
+Include `xdebug::uninstall` in your node's `run_list` for uninstall Xdebug extensions:
+
 
 ## Common configuration options for vagrant
 
@@ -45,7 +43,7 @@ Include `xdebug` in your node's `run_list`:
 ```json
 {
   "run_list": [
-    "recipe[xdebug::default]"
+    "recipe[xdebug::install]"
   ],
   "default_attributes": {
     "xdebug": {
