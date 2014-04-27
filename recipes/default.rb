@@ -24,7 +24,7 @@ directory 'xdebug.profiler_output_dir' do
   owner 'www-data'
   group 'www-data'
   action :create
-  only_if node['xdebug']['directives']['profiler_output_dir']
+  only_if { node['xdebug']['directives']['profiler_output_dir'] }
 end
 
 php_pear 'xdebug' do
