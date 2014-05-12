@@ -35,8 +35,6 @@ php_pear name do
   zend_extensions ['xdebug.so']
   directives (directives)
   action :install
-  notifies :reload, 'service[php-fpm]' unless resource_not_found['service[php-fpm]']
-  notifies :reload, 'service[apache2]' unless resource_not_found['service[apache2]']
 end
 
 template "#{node['php']['ext_conf_dir']}/#{name}.ini" do
@@ -46,4 +44,14 @@ template "#{node['php']['ext_conf_dir']}/#{name}.ini" do
   group 'root'
   mode '0644'
   variables(:name => name, :extensions =>  {'xdebug.so' => 'zend'}, :directives => directives)
+  notifies :run, 'execute[enable xdebug module]'
+  notifies :reload, 'service[php-fpm]' unless resource_not_found['service[php-fpm]']
+  notifies :reload, 'service[apache2]' unless resource_not_found['service[apache2]']
+end
+
+execute 'enable xdebug module' do
+  command 'php5enmod xdebug'
+  action :nothing
+  notifies :reload, 'service[php-fpm]' unless resource_not_found['service[php-fpm]']
+  notifies :reload, 'service[apache2]' unless resource_not_found['service[apache2]']
 end
