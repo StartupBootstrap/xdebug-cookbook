@@ -50,7 +50,7 @@ template "#{node['php']['ext_conf_dir']}/#{name}.ini" do
 end
 
 execute 'enable xdebug module' do
-  command 'php5enmod xdebug'
+  command "#{node['php']['enable_mod']} xdebug"
   action :nothing
   notifies :reload, 'service[php-fpm]' unless resource_not_found['service[php-fpm]']
   notifies :reload, 'service[apache2]' unless resource_not_found['service[apache2]']
